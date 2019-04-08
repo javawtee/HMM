@@ -24,3 +24,4 @@ phmm.iml
 .idea/misc.xml
 .idea/compiler.xml
 .idea/.name
+*.class
