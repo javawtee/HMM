@@ -1,4 +1,4 @@
-import views.MainView;
+import controllers.MainController;
 
 public class Main {
     public static void main(String[] args){
@@ -7,6 +7,6 @@ public class Main {
             System.exit(0);
 
         // run application
-        MainView mainView = new MainView();
+        new MainController();
     }
 }

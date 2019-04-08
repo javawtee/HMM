@@ -4,23 +4,27 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
-public class FileLoader {
+class FileLoader {
     private Logger logger;
     private JFileChooser fileChooser;
     private File loadedFile;
     private String lastOpenedPath = ".";
 
-    public FileLoader(Logger logger){
-        this.logger = logger;
-        fileChooser = new JFileChooser();
+    File getLoadedFile(){
+        return loadedFile;
     }
 
-    public boolean open(String fileExtension, String something){
+    FileLoader(Logger logger){
+        this.logger = logger;
+    }
+
+    boolean open(String fileExtension, String something){
+        fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(lastOpenedPath));
         int selected = fileChooser.showOpenDialog(null);
         if(selected == JFileChooser.OPEN_DIALOG ){
             if(fileChooser.getSelectedFile().toString().endsWith("." + fileExtension)){
-                logger.addEvent("Selected " + something + " at '" + fileChooser.getSelectedFile().toString() + "'");
+                logger.addEvent("Selected " + something + " @ '" + fileChooser.getSelectedFile().toString() + "'");
                 try {
                     lastOpenedPath = fileChooser.getSelectedFile().getParentFile().getCanonicalPath();
                 } catch (IOException ex){
