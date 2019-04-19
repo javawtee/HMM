@@ -1,5 +1,6 @@
 package controllers;
 
+import models.HMM.HMM;
 import views.MainView;
 
 public class MainController {
@@ -7,6 +8,7 @@ public class MainController {
     private Logger logger;
     private FileLoader fileLoader;
     private HMModeler HMModeler;
+    private HMM currentHMM = null;
 
 
     public MainController(){
@@ -18,9 +20,6 @@ public class MainController {
 
         // initialize FileLoader
         fileLoader = new FileLoader(logger);
-
-        // initialize HMModeler
-        HMModeler = new HMModeler();
 
         // setup view's actions
         setButtonListener();
@@ -54,8 +53,12 @@ public class MainController {
                             " - Number of sequences: " + faReader.getSequenceModels().size() + "\n" +
                             " - Sequence length: " + faReader.getSequenceModels().get(0).getSequenceLength()
                     );
+                    // initialize HMModeler
+                    HMModeler = new HMModeler();
                     String result = HMModeler.train(faReader.getSequenceModels());
+                    currentHMM = HMModeler.getTrainedHMM();
                     if(result == null){
+                        mainView.viewTrainedHMMBtn.setEnabled(true);
                         logger.addEvent("Finished training. To see result, click View (next to 'Train a pHMM' button)");
                     } else {
                         logger.addEvent(result);
