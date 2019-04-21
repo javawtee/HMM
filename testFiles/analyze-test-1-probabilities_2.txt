@@ -1,0 +1,18 @@
+Not investigate on next observation, but transition from X0->X3
+
+*** from: I0 -- to: I3 -- tp: 0.009259259259259259 -- previous score: 1.3395919067215364E-13 -- emission: 0.05
+*** from: M1 -- to: I3 -- tp: 0.015873015873015872 -- previous score: 1.1648625275839448E-13 -- emission: 0.05
+*** from: I1 -- to: I3 -- tp: 0.037037037037037035 -- previous score: 6.697959533607682E-14 -- emission: 0.05
+*** from: M2 -- to: I3 -- tp: 0.06666666666666667 -- previous score: 2.1705512936346795E-13 -- emission: 0.05
+*** from: I2 -- to: I3 -- tp: 0.041666666666666664 -- previous score: 2.570938784307739E-11 -- emission: 0.05
+*** from: M3 -- to: I3 -- tp: 0.0 -- previous score: 8.94239577150518E-12 -- emission: 0.05
+*** from: I3 -- to: I3 -- tp: 0.5 -- previous score: 1.3186099108830679E-11 -- emission: 0.05
+--- score @ [7][7] = 3.29652477720767E-13
+
+Conclusion:
+- M3->I3 produces 0.0 => problems with logic in getTransitionProbability()
+
+~~ Fixed
+=> Viterbi path is as expected: S -> M1 -> M2 -> I2 -> I2 -> I2 -> I2 -> I2 -> M3 -> E
+
+[CLOSED]

@@ -1,8 +1,9 @@
 package models.HMM.state.probabilities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class MDTransition {
+public class MDTransition implements Serializable {
     private int mdStateIndex;
     private HashMap<Integer, String> positionForTransitions = new HashMap<>();
     private HashMap<Integer, String> positionForNextDestinations = new HashMap<>();

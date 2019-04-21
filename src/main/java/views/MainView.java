@@ -16,8 +16,14 @@ public class MainView extends JFrame {
     public JTextArea loggerView;
     public JScrollPane loggerScrollPane;
 
+    public void setTestResults(String text){
+        testResults.setText(text);
+        testResults.setToolTipText(text);
+    }
+
     public void setHmmName(String text){
         hmmName.setText(text);
+        hmmName.setToolTipText(text);
     }
 
     public String getHmmName(){ return hmmName.getText(); }

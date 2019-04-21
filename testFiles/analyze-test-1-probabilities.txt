@@ -1,0 +1,22 @@
+--- previous scores are default, but tested (in analyze-test-1-scores.txt) and have correct results
+--- observation: E
+*** from: S -- to: I0 -- tp: 0.125 -- previous score: 1.0 -- emission: 0.05
+*** from: S -- to: M1 -- tp: 0.625 -- previous score: 1.0 -- emission: 0.17391304347826086
+*** from: S -- to: I1 -- tp: 0.0625 -- previous score: 1.0 -- emission: 0.05
+*** from: S -- to: M2 -- tp: 0.125 -- previous score: 1.0 -- emission: 0.043478260869565216
+*** from: S -- to: I2 -- tp: 0.020833333333333332 -- previous score: 1.0 -- emission: 0.16666666666666666
+*** from: S -- to: M3 -- tp: 0.020833333333333332 -- previous score: 1.0 -- emission: 0.043478260869565216
+*** from: S -- to: I3 -- tp: 0.006944444444444444 -- previous score: 1.0 -- emission: 0.05
+
+Transition probabilities:
+(1) S->I1 = S->D1->I1 = 1/4 * 1/4 = 0.125 
+(2) S->M2 = S->D1->M2 = 1/4 * 1/2 = 0.125
+(3) S->I2 = S->D1->D2->I2 = 1/4 * 1/4 * 1/3 = 0.020833
+(4) S->M3 = S->D1->D2->M3 = 1/4 * 1/4 * 1/3 = 0.020833
+(5) S->I3 = S->D1->D2->D3->I3 = 1/4 * 1/4 * 1/3 * 1/3 = 0.006944
+
+Conclusion:
+- emission probabilities are correct
+- transition probabilities are correct with all test (1->5) and from S -> X (match or insert)
+- investigate at next observation (analyze-test-1-probabilities_2.txt)
+

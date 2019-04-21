@@ -1,6 +1,8 @@
 package models;
 
-public class SequenceModel {
+import java.io.Serializable;
+
+public class SequenceModel implements Serializable {
     private String sequenceName;
     private String sequence;
 

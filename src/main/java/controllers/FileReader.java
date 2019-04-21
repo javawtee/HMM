@@ -12,15 +12,15 @@ import java.util.ArrayList;
 class FaReader {
     private File faFile;
     private ArrayList<SequenceModel> sequenceModels;
-    FaReader(File faFile){
+    FaReader(File faFile, boolean isTestFile){
         this.faFile = faFile;
         sequenceModels = new ArrayList<>();
-        sequenceModels = prepareSequenceModels();
+        sequenceModels = prepareSequenceModels(isTestFile);
     }
 
     ArrayList<SequenceModel> getSequenceModels(){ return sequenceModels; }
 
-    private ArrayList<SequenceModel> prepareSequenceModels(){
+    private ArrayList<SequenceModel> prepareSequenceModels(boolean isTestFile){
         BufferedReader reader;
         try{
             reader = new BufferedReader(new FileReader(faFile));
@@ -36,7 +36,7 @@ class FaReader {
                             sequenceLength = sequence.length();
                         }
                         // check length of the next n-th sequence, if not equal => unaligned sequences
-                        if(sequence.length() != sequenceLength){
+                        if(!isTestFile && sequence.length() != sequenceLength){
                             JOptionPane.showMessageDialog(null, "Found different length. Sequences are not aligned");
                             return null;
                         }

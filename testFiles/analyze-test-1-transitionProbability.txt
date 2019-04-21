@@ -1,0 +1,17 @@
+--- col = 2
+TID: 36 -- from: I0 -- to: M2 -- tp: 0.16666666666666666
+TID: 36 -- from: M1 -- to: M2 -- tp: 0.7142857142857143
+TID: 36 -- from: I1 -- to: M2 -- tp: 0.3333333333333333
+TID: 36 -- from: M2 -- to: M2 -- tp: 0.0
+TID: 36 -- from: I2 -- to: M2 -- tp: 0.0
+TID: 36 -- from: M3 -- to: M2 -- tp: 0.0
+TID: 36 -- from: I3 -- to: M2 -- tp: 0.0
+TID: 36 -- from: I0 -- to: M2 -- previous score: 1.0416666666666667E-4 -- emission: 0.13043478260869565
+TID: 36 -- from: M1 -- to: M2 -- previous score: 3.6231884057971015E-4 -- emission: 0.13043478260869565
+TID: 36 -- from: I1 -- to: M2 -- previous score: 5.208333333333334E-5 -- emission: 0.13043478260869565
+TID: 36 -- from: M2 -- to: M2 -- previous score: 0.0033756413718606534 -- emission: 0.13043478260869565
+TID: 36 -- from: I2 -- to: M2 -- previous score: 8.62663906142167E-4 -- emission: 0.13043478260869565
+TID: 36 -- from: M3 -- to: M2 -- previous score: 2.2504275812404356E-4 -- emission: 0.13043478260869565
+TID: 36 -- from: I3 -- to: M2 -- previous score: 8.626639061421669E-5 -- emission: 0.13043478260869565
+
+Conclusion: read wrong observation index => emission probability is wrong at M2

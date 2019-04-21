@@ -22,7 +22,7 @@ public class StartState extends AbstractSpecialState {
                 SD++;
             }
         }
-        // determine if Io is uniform then S->Io = 0
+        // determine if Io is uniform then M->Io = 0
         /*
                 S         final combined insert state
                           -
@@ -36,9 +36,9 @@ public class StartState extends AbstractSpecialState {
         // estimate and correct probabilities probabilities
         double[] returned = Correction.correctTransitionProbabilities(SM, SI, SD);
 
-        transitionProbabilities.put("SM", returned[0]);
-        transitionProbabilities.put("SI", returned[1]);
-        transitionProbabilities.put("SD", returned[2]);
+        transitionProbabilities.put("SM1", returned[0]);
+        transitionProbabilities.put("SI0", returned[1]);
+        transitionProbabilities.put("SD1", returned[2]);
     }
 
     @Override
