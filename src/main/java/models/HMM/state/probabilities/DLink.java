@@ -34,9 +34,11 @@ public class DLink implements Serializable {
     // first DLink is S->D1
     public void updateFirstDLink(double probability){
         dLink.put(1, probability);
-        // update next dLink D1->D2 because D2 goes before D1 is updated
-        double lastD2Probability = dLink.get(2);
-        dLink.put(2, probability * lastD2Probability);
+        if(dLink.containsKey(2)) {
+            // update next dLink D1->D2 because D2 goes before D1 is updated
+            double lastD2Probability = dLink.get(2);
+            dLink.put(2, probability * lastD2Probability);
+        }
     }
 
     public void addDLink(int toIndex, double probability){

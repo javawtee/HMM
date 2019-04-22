@@ -71,7 +71,7 @@ class HMMScorer {
         // initialize scores
         // first row has all 0, S has no emission P(E|S) = 0
         for(int i = 0; i < sequenceLength; i++){
-            vScores[0][i] = new VScore(0.0, "");
+            vScores[0][i] = new VScore(0.0, -1,"");
         }
         // ------------------
         // estimate start->X state for first observation
@@ -81,12 +81,13 @@ class HMMScorer {
             char observation = sequenceModel.getSequence()[0];
             // assumed previous cell score is 1, doesn't affect estimations
             // fromStateIndex = 0 => start state
-            vScores[row][0] = new VScore(vCell(1, 0, row, observation), "S");
+            vScores[row][0] = new VScore(vCell(1, 0, row, observation), 0,"S");
             if(vScores[row][0].getScore() > viterbiBestColumnHit){
                 viterbiBestColumnHit = vScores[row][0].getScore();
             }
         }
 
+        int viterbiLastStateIndex = 1; // determine state index in the last column, used for trace back
         for(int col = 1; col < sequenceLength; col++){
             char observation = sequenceModel.getSequence()[col];
             int row = 1; // ignore row for Start state because S has no emission, then P(E|S) = 0
@@ -109,10 +110,11 @@ class HMMScorer {
                     }
                 }
                 // finished scoring a cell
-                vScores[row][col] = new VScore(max, states.get(viterbiStateIndex).getStateName());
+                vScores[row][col] = new VScore(max, viterbiStateIndex, states.get(viterbiStateIndex).getStateName());
                 //System.out.println("--- score @ [" + row + "][" + col + "] = " + max );
                 if(max >= viterbiBestColumnHit){
                     viterbiBestColumnHit = max;
+                    viterbiLastStateIndex = row;
                 }
                 row++;
                 transitionToStopProbability = 0.0;
@@ -121,7 +123,7 @@ class HMMScorer {
             viterbi.setBestHit(viterbiBestColumnHit);
         }
 
-        viterbi = traceBack(viterbi, vScores, numOfStates-1, sequenceLength-1);
+        viterbi = traceBack(viterbi, vScores, viterbiLastStateIndex, sequenceLength-1);
 
         synchronized (viterbis) {
             viterbis.remove(sequencePosition);
@@ -255,20 +257,13 @@ class HMMScorer {
                 states.get(stateIndex).getEmissionProbabilities().get('*');
     }
 
-    private Viterbi traceBack(Viterbi viterbi, VScore[][] vScores, int lastRowIndex, int lastColIndex){
-        // running out of time, so careless of complexity
-        for(int col = lastColIndex; col >= 0 ; col--){
-            VScore maxVScore = vScores[1][col];
-            double max = maxVScore.getScore();
-            for(int row = 2; row < lastRowIndex; row++){
-                if(vScores[row][col].getScore() >= max){
-                    maxVScore = vScores[row][col];
-                    max = maxVScore.getScore();
-                }
-            }
-            viterbi.addStateToPath(maxVScore.getFromStateName());
+    private Viterbi traceBack(Viterbi viterbi, VScore[][] vScores, int lastStateIndex, int colIndex){
+        if(lastStateIndex == 0){
+            return viterbi;
         }
-        return viterbi;
+        int previousStateIndex = vScores[lastStateIndex][colIndex].getFromStateIndex();
+        viterbi.addStateToPath(states.get(previousStateIndex).getStateName());
+        return traceBack(viterbi, vScores, previousStateIndex, colIndex-1);
     }
 
     private class Viterbi {
@@ -286,13 +281,16 @@ class HMMScorer {
 
     private class VScore {
         private double score;
+        private int fromStateIndex;
         private String fromStateName;
-        VScore(double score, String fromStateName){
+        
+        VScore(double score, int fromStateIndex, String fromStateName){
             this.score = score;
+            this.fromStateIndex = fromStateIndex;
             this.fromStateName = fromStateName;
         }
 
         double getScore(){return score;}
-        String getFromStateName(){return fromStateName;}
+        int getFromStateIndex(){return fromStateIndex;}
     }
 }
