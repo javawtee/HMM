@@ -258,18 +258,6 @@ class HMMScorer {
     }
 
     private Viterbi traceBack(Viterbi viterbi, VScore[][] vScores, int lastStateIndex, int colIndex){
-        // running out of time, so careless of complexity
-//        for(int col = lastColIndex; col >= 0 ; col--){
-////            VScore maxVScore = vScores[1][col];
-////            double max = maxVScore.getScore();
-////            for(int row = 2; row < lastRowIndex; row++){
-////                if(vScores[row][col].getScore() >= max){
-////                    maxVScore = vScores[row][col];
-////                    max = maxVScore.getScore();
-////                }
-////            }
-////            viterbi.addStateToPath(maxVScore.getFromStateName());
-////        }
         if(lastStateIndex == 0){
             return viterbi;
         }
@@ -295,6 +283,7 @@ class HMMScorer {
         private double score;
         private int fromStateIndex;
         private String fromStateName;
+        
         VScore(double score, int fromStateIndex, String fromStateName){
             this.score = score;
             this.fromStateIndex = fromStateIndex;
@@ -303,6 +292,5 @@ class HMMScorer {
 
         double getScore(){return score;}
         int getFromStateIndex(){return fromStateIndex;}
-        String getFromStateName(){return fromStateName;}
     }
 }

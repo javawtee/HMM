@@ -1,0 +1,57 @@
+[row][col]
+--- col = 1, best hit at row = 4
+Thread ID: 36 score @ [1][1] = 1.0416666666666667E-4
+Thread ID: 36 score @ [2][1] = 3.6231884057971015E-4
+Thread ID: 36 score @ [3][1] = 5.208333333333334E-5
+Thread ID: 36 score @ [4][1] = 0.0033756413718606534
+Thread ID: 36 score @ [5][1] = 8.62663906142167E-4
+Thread ID: 36 score @ [6][1] = 2.2504275812404356E-4
+Thread ID: 36 score @ [7][1] = 8.626639061421669E-5
+--- col = 2, best hit at row = 4 but supposed to be at row = 5 => open analysis in (analyze-test1-transitionProbability.txt)
+Thread ID: 36 score @ [1][2] = 1.7361111111111112E-6
+Thread ID: 36 score @ [2][2] = 1.5096618357487922E-6
+Thread ID: 36 score @ [3][2] = 8.680555555555556E-7
+Thread ID: 36 score @ [4][2] = 3.375641371860654E-5
+Thread ID: 36 score @ [5][2] = 2.695824706694272E-5
+Thread ID: 36 score @ [6][2] = 2.9353403233570898E-5
+Thread ID: 36 score @ [7][2] = 1.1252137906202178E-5
+--- col = 3, best hit at row = 5
+Thread ID: 36 score @ [1][3] = 2.8935185185185185E-8
+Thread ID: 36 score @ [2][3] = 2.5161030595813205E-8
+Thread ID: 36 score @ [3][3] = 1.4467592592592593E-8
+Thread ID: 36 score @ [4][3] = 4.6883907942509077E-8
+Thread ID: 36 score @ [5][3] = 8.4244522084196E-7
+Thread ID: 36 score @ [6][3] = 5.860488492813634E-7
+Thread ID: 36 score @ [7][3] = 2.8130344765505443E-7
+--- col = 4, best hit at row = 5
+Thread ID: 36 score @ [1][4] = 4.822530864197531E-10
+Thread ID: 36 score @ [2][4] = 4.193505099302201E-10
+Thread ID: 36 score @ [3][4] = 2.4112654320987656E-10
+Thread ID: 36 score @ [4][4] = 7.813984657084846E-10
+Thread ID: 36 score @ [5][4] = 2.632641315131125E-8
+Thread ID: 36 score @ [6][4] = 1.8314026540042607E-8
+Thread ID: 36 score @ [7][4] = 7.032586191376361E-9
+--- col = 5, best hit at row = 5
+Thread ID: 36 score @ [1][5] = 8.037551440329219E-12
+Thread ID: 36 score @ [2][5] = 6.989175165503668E-12
+Thread ID: 36 score @ [3][5] = 4.0187757201646094E-12
+Thread ID: 36 score @ [4][5] = 1.3023307761808076E-11
+Thread ID: 36 score @ [5][5] = 8.227004109784765E-10
+Thread ID: 36 score @ [6][5] = 5.723133293763315E-10
+Thread ID: 36 score @ [7][5] = 1.7581465478440904E-10
+--- col = 6, best hit at row = 5
+Thread ID: 36 score @ [1][6] = 1.3395919067215364E-13
+Thread ID: 36 score @ [2][6] = 1.1648625275839448E-13
+Thread ID: 36 score @ [3][6] = 6.697959533607682E-14
+Thread ID: 36 score @ [4][6] = 2.1705512936346795E-13
+Thread ID: 36 score @ [5][6] = 2.570938784307739E-11
+Thread ID: 36 score @ [6][6] = 1.788479154301036E-11
+Thread ID: 36 score @ [7][6] = 4.3953663696102264E-12
+--- col = 7, best hit at row = 5
+Thread ID: 36 score @ [1][7] = 4.1345429219800504E-17
+Thread ID: 36 score @ [2][7] = 6.163293796740447E-17
+Thread ID: 36 score @ [3][7] = 1.1163265889346137E-15
+Thread ID: 36 score @ [4][7] = 3.617585489391133E-15
+Thread ID: 36 score @ [5][7] = 1.606836740192337E-12
+Thread ID: 36 score @ [6][7] = 5.588997357190737E-13
+Thread ID: 36 score @ [7][7] = 1.0988415924025566E-13
