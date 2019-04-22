@@ -1,14 +1,21 @@
 package controllers;
 
+import models.HMM.HMM;
+
 import javax.swing.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 class FileLoader {
     private Logger logger;
     private JFileChooser fileChooser;
     private File loadedFile;
     private String lastOpenedPath = ".";
+    private HMM hmm;
+
+    HMM getHMM() { return hmm; }
 
     File getLoadedFile(){
         return loadedFile;
@@ -31,6 +38,17 @@ class FileLoader {
                     // ignore
                 }
                 loadedFile = fileChooser.getSelectedFile();
+                if("hmm".equals(fileExtension)){
+                    try{
+                        ObjectInputStream input = new ObjectInputStream(new FileInputStream(loadedFile));
+                        hmm = (HMM) input.readObject();
+                        input.close();
+                        logger.addEvent("Loaded HMM");
+                    } catch (IOException | ClassNotFoundException ex){
+                        // ignored
+                        logger.addEvent("Loading HMM error: " + ex.toString());
+                    }
+                }
                 return true;
             }
             logger.addEvent("Selected file is not appropriate. File should end with ." + fileExtension);

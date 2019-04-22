@@ -1,42 +1,47 @@
 package models.HMM.state.probabilities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class Emission {
+public abstract class Emission implements Serializable {
+    private final double e; // used for pseudo-probability
     private final int numOfAminoAcid; // number of known amino acid in the world
     protected HashMap<Character, Double> emissionProbabilities = new HashMap<>();
-    private int numOfSequences;
 
-    public Emission(HashMap<Character, Double> emissionCounts, int numOfSequences){
+    public Emission(HashMap<Character, Double> emissionCounts){
+        e = 0.1;
         numOfAminoAcid = 20;
         if(emissionCounts != null) { // case null: insert state is uniform, do nothing
             this.emissionProbabilities.putAll(emissionCounts);
         }
-        this.numOfSequences = numOfSequences;
     }
 
     // estimate and correct emission probabilities for a column
     public void generateEmissionProbabilities(){
+        int numOfTotalCount = 0;
+        for(Character emission: emissionProbabilities.keySet()){
+            if(emission != '-') { // ignore all gap counts
+                numOfTotalCount += emissionProbabilities.get(emission);
+            }
+        }
         double probabilityForAbsentEmission = 0.0; // represents probability for each absent amino acid
-        emissionProbabilities.putIfAbsent('-', 0.0); // prevent exception: no gap appears in this state
+        emissionProbabilities.putIfAbsent('-', 0.0); // used to determine numOfPresentEmissions
         // number of present amino acids
-        int numOfPresentEmissions = emissionProbabilities.keySet().size() - 1; // -1 for '-'
+        int numOfPresentEmissions = emissionProbabilities.keySet().size() -1; // -1 for '-'
         // calculate number of absent amino acids, since no amino acid is more likely to be emitted than another
         int numOfAbsentEmissions = numOfAminoAcid - numOfPresentEmissions;
-        // minus count of gaps because in-del is not considered as emission
-        // added number of absent amino acid for pseudo-count use
-        double newNumOfSequences = numOfSequences - emissionProbabilities.get('-') + numOfAbsentEmissions;
-        // using pseudo-count to set positive probability for the absent amino acids
-        // can't decide good value of e for pseudo-probabilities
-        if(numOfAbsentEmissions > 0){ // if there is any absence
-            probabilityForAbsentEmission = (double) 1/newNumOfSequences;
+        if(numOfAbsentEmissions > 0){
+            // number of absences = number of amino acid, then it is calculated for uniform insert state
+            probabilityForAbsentEmission = numOfAbsentEmissions == numOfAminoAcid ?
+                    (double) 1/numOfAminoAcid :
+                    e/numOfAbsentEmissions;
         }
         for(Character emission: emissionProbabilities.keySet()){
-            //System.out.println("- emission " + emission + ": " + emissionProbabilities.get(emission));
             if(emission != '-') {
+                double count = emissionProbabilities.get(emission);
                 emissionProbabilities.put(
                         emission,
-                        emissionProbabilities.get(emission) / newNumOfSequences
+                        (count/numOfTotalCount) - (e/numOfPresentEmissions)
                 );
             }
         }
