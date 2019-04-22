@@ -4,9 +4,10 @@ import models.HMM.state.probabilities.Correction;
 import models.HMM.state.probabilities.Emission;
 import models.HMM.state.probabilities.MDTransition;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class InsertState extends Emission implements IStateDefinition {
+public class InsertState extends Emission implements IStateDefinition, Serializable {
     private int index;
     private HashMap<Integer, String> positionForNextTransitions;
     private HashMap<String, Double> transitionProbabilities = new HashMap<>();
@@ -21,9 +22,9 @@ public class InsertState extends Emission implements IStateDefinition {
     public InsertState(int index,
                        boolean isUniform,
                        HashMap<Character, Double> emissionCounts,
-                       int numOfSequences, HashMap<Integer,
+                       HashMap<Integer,
                        String> positionForTransitions){
-        super(emissionCounts, numOfSequences);
+        super(emissionCounts);
         this.index = index;
         this.isUniform = isUniform;
         if(positionForTransitions != null) {

@@ -2,9 +2,10 @@ package models.HMM.state.definition.special;
 
 import models.HMM.state.definition.IStateDefinition;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class AbstractSpecialState implements IStateDefinition {
+public abstract class AbstractSpecialState implements IStateDefinition, Serializable {
     private HashMap<Character, Double> emissionProbabilities = new HashMap<>();
     HashMap<Integer, String> positionForTransitions;
     HashMap<String, Double> transitionProbabilities = new HashMap<>();

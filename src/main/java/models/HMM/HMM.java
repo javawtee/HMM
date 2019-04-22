@@ -21,9 +21,10 @@ public class HMM implements Serializable {
     }
 
 
-
     // ---- STATES
     private ArrayList<IStateDefinition> states = new ArrayList<>(); // consists of: Start, Stop, Insert and Match states
+
+    public ArrayList<IStateDefinition> getStates(){return states;}
 
     public int getHMMSize(){ return states.size(); }
     public void addState(IStateDefinition definedState){
@@ -33,15 +34,15 @@ public class HMM implements Serializable {
 
 
     // ---- TRANSITIONS
-    private ArrayList<MDTransition> mdTransition;
+    private ArrayList<MDTransition> mdTransitions;
     private DLink dLink;
 
-    public ArrayList<MDTransition> getMdTransition() {
-        return mdTransition;
+    public ArrayList<MDTransition> getMdTransitions() {
+        return mdTransitions;
     }
 
-    public void setMdTransition(ArrayList<MDTransition> mdTransition) {
-        this.mdTransition = mdTransition;
+    public void setMdTransitions(ArrayList<MDTransition> mdTransitions) {
+        this.mdTransitions = mdTransitions;
     }
 
     public DLink getdLink() {

@@ -24,7 +24,7 @@ class HMModeler {
     private DLink dLink = new DLink(); // store delete-delete transition
     private int sequencePosition = 0;
 
-    public HMM getTrainedHMM(){return hmm;}
+    HMM getTrainedHMM(){return hmm;}
 
     private void processSequence(SequenceModel sequenceModel){
         int sequencePosition;
@@ -64,7 +64,7 @@ class HMModeler {
                         mdTransitions.add(mdTransition);
 
                     //---- MATCH STATE ----
-                        matchState = new MatchState(mdStateIndex, stateModel.getEmissionCounts(), stateModel.getNumOfSequences());
+                        matchState = new MatchState(mdStateIndex, stateModel.getEmissionCounts());
                         matchState.generateEmissionProbabilities();
                     }
 
@@ -75,7 +75,6 @@ class HMModeler {
                             insertStateIndex,
                             true,
                             null,
-                            stateModel.getNumOfSequences(),
                             null));
 
                         insertState.generateEmissionProbabilities();
@@ -112,6 +111,8 @@ class HMModeler {
                             startState.generateTransitionProbabilities(insertState.getEmissionCountInCombinedColumn());
                             // add start state to hmm
                             hmm.addState(startState);
+                            // first DLink is S->D1
+                            dLink.updateFirstDLink(startState.getTransitionProbabilities().get("SD1"));
                         }
                     // *************************************************************************************************
 
@@ -131,7 +132,6 @@ class HMModeler {
                             insertStateBeforeStop = new InsertState(insertStateIndex,
                                     true,
                                     null,
-                                    stateModel.getNumOfSequences(),
                                     null);
                             insertStateBeforeStop.generateEmissionProbabilities();
                             insertStateBeforeStop.generateTransitionProbabilitiesToStop(null);
@@ -153,8 +153,6 @@ class HMModeler {
                         hmm.addState(stopState);
 
                         // ---- any clean-ups go here
-                        // remove DLink to the first delete state (index of 1), it is omitted to be starting of the link
-                        dLink.removeFirstDLink();
                     }
 
                     // update index for next
@@ -177,7 +175,6 @@ class HMModeler {
                                 insertStateIndex,
                                 false,
                                 stateModel.getEmissionCounts(),
-                                stateModel.getNumOfSequences(),
                                 stateModel.getPositionForTransitions()
                         );
 
@@ -217,28 +214,9 @@ class HMModeler {
         // set Training set (input data in aligned columns)
         hmm.setSequenceModels(sequenceModels);
         // set array of transition probabilities for match and delete to next state
-        hmm.setMdTransition(mdTransitions);
+        hmm.setMdTransitions(mdTransitions);
         // set map of transition probabilities from delete state @ index of 1 to other delete states
         hmm.setdLink(dLink);
-
-        System.out.println("HMM size: " + hmm.getHMMSize());
-        for(int i = 0; i < hmm.getHMMSize(); i++){
-            String stateName = hmm.getState(i).getStateName();
-            System.out.println("--- " + stateName);
-            if(stateName.startsWith("M")) {
-//                for(Character emission : hmm.getState(i).getEmissionProbabilities().keySet()){
-//                    System.out.println(emission + ": " + hmm.getState(i).getEmissionProbabilities().get(emission));
-//                }
-                int index = Integer.parseInt(stateName.substring(1, stateName.length()));
-                for (String probabilities : mdTransitions.get(index - 1).getTransitionProbabilities().keySet()) {
-                    System.out.println("--- " + probabilities + ": " + mdTransitions.get(index - 1).getTransitionProbabilities().get(probabilities));
-                }
-            } else {
-                for(String probabilities: hmm.getState(i).getTransitionProbabilities().keySet()){
-                    System.out.println("--- " + probabilities + ": " + hmm.getState(i).getTransitionProbabilities().get(probabilities)) ;
-                }
-            }
-        }
 
         return null; // finished train
     }
